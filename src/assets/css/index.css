@@ -63,7 +63,7 @@ button:focus-visible {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -141,6 +141,7 @@ header {
 }
 
 .card {
+  width: 200px;
   border: 2px solid red;
   border-radius: 10px;
   display: flex;
@@ -152,7 +153,17 @@ header {
   font-size: 0.8rem;
 }
 
+.card-content {
+  padding: 10px;
+}
+
 .movie-title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
+}
+
+.language {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

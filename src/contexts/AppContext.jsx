@@ -14,7 +14,8 @@ export function AppProvider({ children }) {
 
     
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-    const apiUrlMovies = 'https://api.themoviedb.org/3/search/movie'
+    const apiUrlMovies = 'https://api.themoviedb.org/3/search/movie';
+    const apiUrlSeries = 'https://api.themoviedb.org/3/search/tv';
 
 
     useEffect(() => {
@@ -39,6 +40,25 @@ export function AppProvider({ children }) {
                 console.error(`Errore nel caricamento dei dati`, err);
                 setIsLoading(false);
             });
+
+        axios
+            .get(apiUrlSeries, {
+                params: {
+                    api_key: apiKey,
+                    query: query,
+                    language: `it-IT`
+                }
+            })
+            .then(res => {
+                console.log(`Dati ricevuti:`, res.data);
+                setSeries(res.data.results);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error(`Errore nel caricamento dei dati`, err);
+                setIsLoading(false);
+            });
+
     }, [query]);
 
     return (
