@@ -1,11 +1,14 @@
+import Header from "./components/layouts/Header";
 import Main from "./components/layouts/Main";
-import Footer from "./components/layouts/Footer";
+import { AppProvider } from "./contexts/AppContext";
 
 export default function App() {
   return (
     <>
-      <Main />
-      <Footer />
+      <AppProvider>
+        <Header />
+        <Main />
+      </AppProvider>
     </>
   );
 }
