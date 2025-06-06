@@ -9,16 +9,15 @@ export function AppProvider({ children }) {
     const [ search, setSearch ] = useState(``);
     const [isLoading, setIsLoading] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
-    const [selectedGenre, setSelectedGenre] = useState(null);
     const [ query, setQuery ] = useState(``);
-
     const [genresMap, setGenresMap] = useState({});
-
+    const [movieGenres, setMovieGenres] = useState([]);
+    const [tvGenres, setTvGenres] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState(null);
     
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     const apiUrlMovies = 'https://api.themoviedb.org/3/search/movie';
     const apiUrlSeries = 'https://api.themoviedb.org/3/search/tv';
-
 
     useEffect(() => {
         if (!query.trim()) return;
@@ -80,6 +79,27 @@ export function AppProvider({ children }) {
         .catch(err => console.error('Errore caricamento generi:', err));
     }, []);
 
+    useEffect(() => {
+        axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+            params: {
+            api_key: apiKey,
+            language: 'it-IT'
+            }
+        })
+        .then(res => setMovieGenres(res.data.genres))
+        .catch(err => console.error('Errore caricamento generi film:', err));
+
+        axios.get('https://api.themoviedb.org/3/genre/tv/list', {
+            params: {
+            api_key: apiKey,
+            language: 'it-IT'
+            }
+        })
+        .then(res => setTvGenres(res.data.genres))
+        .catch(err => console.error('Errore caricamento generi TV:', err));
+        }, []);
+
+
     return (
         <AppContext.Provider value={{
             movies,
@@ -87,10 +107,13 @@ export function AppProvider({ children }) {
             search,
             isLoading,
             isSearching,
-            selectedGenre,
             query,
             setQuery,
-            genresMap
+            genresMap,
+            movieGenres,
+            tvGenres,
+            selectedGenre,
+            setSelectedGenre
         }}>
             {children}
         </AppContext.Provider>

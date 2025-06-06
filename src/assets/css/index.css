@@ -147,6 +147,25 @@ header {
   box-shadow: none;
 }
 
+.filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.genre-filter {
+  display: flex;
+  gap: 0.3rem;
+}
+
+#genre-select {
+  background-color: black;
+  border: 2px solid #e50914;
+  color: white;
+  border-radius: 10px;
+  width: 190px;
+  padding: 10px;
+}
+
 /* # Main */
 
 main {

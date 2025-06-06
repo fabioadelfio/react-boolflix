@@ -1,3 +1,4 @@
+import FilterSelect from "../Filters/FilterSelect";
 import SearchBar from "../Filters/SearchBar";
 
 export default function Header() {
@@ -5,7 +6,10 @@ export default function Header() {
     <header>
       <div id="page-header">
         <div className="title-header">BOOLFLIX</div>
-        <div><SearchBar /></div>
+        <div className="filters">
+          <FilterSelect /> 
+          <SearchBar />
+        </div>
       </div>
     </header>
   );
