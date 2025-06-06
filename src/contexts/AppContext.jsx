@@ -12,6 +12,8 @@ export function AppProvider({ children }) {
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [ query, setQuery ] = useState(``);
 
+    const [genresMap, setGenresMap] = useState({});
+
     
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     const apiUrlMovies = 'https://api.themoviedb.org/3/search/movie';
@@ -61,6 +63,23 @@ export function AppProvider({ children }) {
 
     }, [query]);
 
+    useEffect(() => {
+        axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+            params: {
+                api_key: apiKey,
+                language: 'it-IT'
+            }
+        })
+        .then(res => {
+            const map = {};
+            res.data.genres.forEach(genre => {
+                map[genre.id] = genre.name;
+            });
+            setGenresMap(map);
+        })
+        .catch(err => console.error('Errore caricamento generi:', err));
+    }, []);
+
     return (
         <AppContext.Provider value={{
             movies,
@@ -70,7 +89,8 @@ export function AppProvider({ children }) {
             isSearching,
             selectedGenre,
             query,
-            setQuery
+            setQuery,
+            genresMap
         }}>
             {children}
         </AppContext.Provider>
